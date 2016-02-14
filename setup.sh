@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# this script installs the puppet modules we need, 
+# this script installs the puppet modules we need,
 #and tries to do tricks with setting local repository for ubuntu updates
 
 # Install wget
@@ -9,14 +9,16 @@ sudo apt-get install -qy wget;
 sed -e '/templatedir/ s/^#*/#/' -i.back /etc/puppet/puppet.conf
 
 ## set local/fastest mirror and local timezone
-mv /etc/apt/sources.list /etc/apt/sources.list.orig
-cat > /etc/apt/sources.list <<EOF
-deb mirror://mirrors.ubuntu.com/mirrors.txt trusty main restricted universe multiverse
-deb mirror://mirrors.ubuntu.com/mirrors.txt trusty-updates main restricted universe multiverse
-deb mirror://mirrors.ubuntu.com/mirrors.txt trusty-backports main restricted universe multiverse
-deb mirror://mirrors.ubuntu.com/mirrors.txt trusty-security main restricted universe multiverse
-
-EOF
+# mv /etc/apt/sources.list /etc/apt/sources.list.orig
+# cat > /etc/apt/sources.list <<EOF
+# deb mirror://mirrors.ubuntu.com/mirrors.txt trusty main restricted universe multiverse
+# deb mirror://mirrors.ubuntu.com/mirrors.txt trusty-updates main restricted universe multiverse
+# deb mirror://mirrors.ubuntu.com/mirrors.txt trusty-backports main restricted universe multiverse
+# deb mirror://mirrors.ubuntu.com/mirrors.txt trusty-security main restricted universe multiverse
+#
+# EOF
+# mv /etc/apt/sources.list /etc/apt/sources.list.bak
+# grep -v as24220.net /etc/apt/sources.list.bak > /etc/apt/sources.list
 sudo apt-get update
 export tz=`wget -qO - http://geoip.ubuntu.com/lookup | sed -n -e 's/.*<TimeZone>\(.*\)<\/TimeZone>.*/\1/p'` &&  sudo timedatectl set-timezone $tz
 
